@@ -171,13 +171,18 @@ app.use(cors());
 app.use(express.json());
 
 // 初始化智谱AI客户端
+// 支持多种环境变量命名方式
+const zhipuApiKey = process.env.ZHIPUAI_API_KEY || process.env.VITE_ZHIPUAI_API_KEY;
+const notionApiKey = process.env.NOTION_API_KEY || process.env.VITE_NOTION_API_KEY;
+const notionDatabaseId = process.env.NOTION_DATABASE_ID || process.env.VITE_NOTION_DATABASE_ID;
+
 const zhipuai = new ZhipuAI({
-  apiKey: process.env.ZHIPUAI_API_KEY
+  apiKey: zhipuApiKey
 });
 
 // 初始化Notion客户端
 const notion = new Client({
-  auth: process.env.NOTION_API_KEY
+  auth: notionApiKey
 });
 
 // URL内容提取API
@@ -529,7 +534,7 @@ app.post('/api/save-to-notion', async (req, res) => {
     // 保存到Notion数据库
     const notionPage = await notion.pages.create({
       parent: {
-        database_id: process.env.NOTION_DATABASE_ID
+        database_id: notionDatabaseId
       },
       properties: {
         title: {
