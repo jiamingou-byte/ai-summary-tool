@@ -1,4 +1,4 @@
-import { notion, notionDatabaseId } from './_utils';
+import { getNotionClient, getNotionDatabaseId } from './_utils';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -7,6 +7,8 @@ export default async function handler(req, res) {
 
   try {
     const { record } = req.body;
+    const notion = getNotionClient();
+    const notionDatabaseId = getNotionDatabaseId();
 
     const notionPage = await notion.pages.create({
       parent: {

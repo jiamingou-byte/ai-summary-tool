@@ -1,4 +1,4 @@
-import { zhipuai, standardizeTags, generateRecommendedTags } from './_utils';
+import { getZhipuaiClient, standardizeTags, generateRecommendedTags } from './_utils';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -7,6 +7,7 @@ export default async function handler(req, res) {
 
   try {
     const { text, note } = req.body;
+    const zhipuai = getZhipuaiClient();
     
     const response = await zhipuai.chat.completions.create({
       model: 'glm-4',

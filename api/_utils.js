@@ -3,7 +3,6 @@ import { Client } from '@notionhq/client';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
-// 预设标签库
 export const presetTags = {
   领域: [
     '技术', '商业', '教育', '健康', '生活', '职场',
@@ -21,7 +20,6 @@ export const presetTags = {
   ]
 };
 
-// 标签标准化映射
 const tagMapping = {
   'tech': '技术',
   'technology': '技术',
@@ -75,7 +73,6 @@ const tagMapping = {
   'evaluation': '评估'
 };
 
-// 标准化标签函数
 export function standardizeTags(tags) {
   return tags.map(tag => {
     const normalizedTag = tag.trim().toLowerCase();
@@ -93,7 +90,6 @@ export function standardizeTags(tags) {
   }).filter((tag, index, self) => tag && self.indexOf(tag) === index);
 }
 
-// 生成推荐标签
 export function generateRecommendedTags(content) {
   const allPresetTags = Object.values(presetTags).flat();
   const recommended = [];
@@ -105,21 +101,24 @@ export function generateRecommendedTags(content) {
   return recommended.slice(0, 5);
 }
 
-// 初始化智谱AI客户端
-const zhipuApiKey = process.env.ZHIPUAI_API_KEY || process.env.VITE_ZHIPUAI_API_KEY;
-export const zhipuai = new ZhipuAI({
-  apiKey: zhipuApiKey
-});
+export function getZhipuaiClient() {
+  const zhipuApiKey = process.env.ZHIPUAI_API_KEY || process.env.VITE_ZHIPUAI_API_KEY;
+  return new ZhipuAI({
+    apiKey: zhipuApiKey
+  });
+}
 
-// 初始化Notion客户端
-const notionApiKey = process.env.NOTION_API_KEY || process.env.VITE_NOTION_API_KEY;
-export const notion = new Client({
-  auth: notionApiKey
-});
+export function getNotionClient() {
+  const notionApiKey = process.env.NOTION_API_KEY || process.env.VITE_NOTION_API_KEY;
+  return new Client({
+    auth: notionApiKey
+  });
+}
 
-export const notionDatabaseId = process.env.NOTION_DATABASE_ID || process.env.VITE_NOTION_DATABASE_ID;
+export function getNotionDatabaseId() {
+  return process.env.NOTION_DATABASE_ID || process.env.VITE_NOTION_DATABASE_ID;
+}
 
-// URL内容提取函数
 export async function extractUrlContent(url) {
   try {
     new URL(url);

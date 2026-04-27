@@ -1,4 +1,4 @@
-import { notion } from './_utils';
+import { getNotionClient } from './_utils';
 
 export default async function handler(req, res) {
   if (req.method !== 'DELETE') {
@@ -7,6 +7,7 @@ export default async function handler(req, res) {
 
   try {
     const { pageId } = req.body;
+    const notion = getNotionClient();
 
     await notion.pages.update({
       page_id: pageId,

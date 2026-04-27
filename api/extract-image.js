@@ -1,4 +1,4 @@
-import { zhipuai } from './_utils';
+import { getZhipuaiClient } from './_utils';
 import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
@@ -64,6 +64,7 @@ export default async function handler(req, res) {
         const imagePath = req.file.path;
         const imageBuffer = fs.readFileSync(imagePath);
         const base64Image = imageBuffer.toString('base64');
+        const zhipuai = getZhipuaiClient();
 
         const messages = [
           {
