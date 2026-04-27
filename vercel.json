@@ -1,16 +1,16 @@
 {
-  "version": 2,
+  "version": 3,
   "builds": [
+    {
+      "src": "backend/index.js",
+      "use": "@vercel/node"
+    },
     {
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist"
       }
-    },
-    {
-      "src": "backend/index.js",
-      "use": "@vercel/node"
     }
   ],
   "routes": [
@@ -19,9 +19,11 @@
       "dest": "backend/index.js"
     },
     {
+      "handle": "filesystem"
+    },
+    {
       "src": "/(.*)",
-      "dest": "dist/$1",
-      "status": 200
+      "dest": "/index.html"
     }
   ]
 }
