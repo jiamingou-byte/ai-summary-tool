@@ -1,29 +1,14 @@
 {
-  "version": 3,
-  "builds": [
-    {
-      "src": "backend/index.js",
-      "use": "@vercel/node"
+  "experimentalServices": {
+    "frontend": {
+      "routePrefix": "/",
+      "framework": "vite",
+      "buildCommand": "npm run build",
+      "outputDirectory": "dist"
     },
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
+    "backend": {
+      "entrypoint": "backend",
+      "routePrefix": "/api"
     }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "backend/index.js"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ]
+  }
 }
