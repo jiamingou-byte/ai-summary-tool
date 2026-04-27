@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 2,
   "builds": [
     {
       "src": "package.json",
@@ -15,11 +15,9 @@
       "dest": "/api/$1"
     },
     {
-      "handle": "filesystem"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "dist/$1",
+      "status": 200
     }
   ]
 }
